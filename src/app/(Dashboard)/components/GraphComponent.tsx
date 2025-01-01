@@ -8,36 +8,24 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { chartAnimation, fadeIn } from 'app/constants/animations';
 import { MotionDiv } from './shared/MotionComponent';
 import { AnimationProvider } from 'app/providers/AnimationProvider';
-import { saving, Days, Month } from 'app/data/store';
 import useChartData from 'app/data/chartdata';
 
 export default function EarningsChart() {
   const [chartType, setChartType] = useState<'area' | 'bar' | 'line'>('area'); // State to manage chart type
   const [timeRange, setTimeRange] = useState<'day' | 'week' | 'month' | 'year'>('day'); // State for time range
   const data = useChartData();
-  const [isLoading, setIsLoading] = useState(true); // Loading state
-  console.log(data)
+  const [isLoading, setIsLoading] = useState(false); // Loading state
   // Data loader with filtering based on time range
-  useEffect(() => {
-    let transformedData = saving.flatMap((month: Month) =>
-      month.days.map((day: Days) => ({
-        date: `${month.name} ${day.date}`, // Format date
-        earnings: day.finalPrice - day.initialPrice, // Calculate earnings
-        transactions: day.transactions + 10 || 0, // Transactions count
-      }))
-    );
-
-    // Filter data based on selected time range
-    if (timeRange === 'week') {
-      transformedData = transformedData.slice(-7); // Last 7 days
-    } else if (timeRange === 'month') {
-      transformedData = transformedData.slice(-30); // Last 30 days
-    } else if (timeRange === 'year') {
-      transformedData = transformedData.slice(-365); // Last 365 days
-    }
-
-    setIsLoading(false); // Set loading to false once data is ready
-  }, [timeRange]);
+  // useEffect(() => {
+  //   let transformedData = saving.flatMap((month: Month) =>
+  //     month.days.map((day: Days) => ({
+  //       date: `${month.name} ${day.date}`, // Format date
+  //       earnings: day.finalPrice - day.initialPrice, // Calculate earnings
+  //       transactions: day.transactions + 10 || 0, // Transactions count
+  //     }))
+  //   );
+  //   setIsLoading(false); // Set loading to false once data is ready
+  // }, [timeRange]);
 
   // Handle chart type change
   const handleChartTypeChange = (type: 'area' | 'bar' | 'line') => {

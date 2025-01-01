@@ -3,12 +3,12 @@ import DashboardCard from '../DashboardCard';
 import Coins from '../CoinsSection';
 import RecentTransactions from '../RecentTransactions';
 import EarningsChart from '../GraphComponent';
-import { useCoinPriceDetails } from '@/app/data/coinPriceDetails';
+import { useCoinPriceDetails } from 'app/data/coinPriceDetails';
 
 const Dashboard = () => {
     const { mergedCoins } = useCoinPriceDetails();
-    const totalBalance = mergedCoins.reduce((acc, coin) => acc + coin.totalInvestment + coin.profit, 0);
-    const totalInvestment = mergedCoins.reduce((acc, coin) => acc + coin.totalInvestment, 0);
+    const totalBalance = mergedCoins.reduce((acc: number, coin: { totalInvestment: number; profit: number; }) => acc + coin.totalInvestment + coin.profit, 0);
+    const totalInvestment = mergedCoins.reduce((acc: number, coin: { totalInvestment: number; }) => acc + coin.totalInvestment, 0);
     const totalCoins = mergedCoins.length;
 
     return (
@@ -22,7 +22,7 @@ const Dashboard = () => {
             <div className="mt-6">
                 <EarningsChart />
             </div>
-            <div className="flex gap-6 justify-between">
+            <div className="flex gap-6 justify-between max-md:flex-col">
                 <Coins />
                 <RecentTransactions />
             </div>

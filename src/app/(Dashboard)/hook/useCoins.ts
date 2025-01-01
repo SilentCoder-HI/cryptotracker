@@ -20,7 +20,7 @@ export const useFetchCoins = () => {
         const fetchCoins = async () => {
             try {
                 const response = await fetch(
-                    'https://api.coingecko.com/api/v3/simple/price?ids=pepe,bonk,wink,tether,terra-luna,FLOKI,1000sats-ordinals,shiba-inu,bittorrent,peanut-the-squirrel,dogecoin,measurable-data-token,amber&vs_currencies=usd'
+                    'https://api.coingecko.com/api/v3/simple/price?ids=pepe,binancecoin,terra-luna-2,vechain,bonk,wink,tether,terra-luna,FLOKI,1000sats-ordinals,shiba-inu,bittorrent,peanut-the-squirrel,adventure-gold,dogecoin,measurable-data-token,amber&vs_currencies=usd'
                 );
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');

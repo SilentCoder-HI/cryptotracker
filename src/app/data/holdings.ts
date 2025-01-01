@@ -85,6 +85,7 @@ const holdings: Coin[] = [
             { date: '2024-12-23 11:36:50', price: 0.00000114989, amount: 43486.5 },
             { date: '2024-12-26 16:31:27', price: 0.00000109485, amount: 100000 }, // New transaction
             { date: '2024-12-28 17:54:44', price: 0.00000109485, amount: 125115.5 }, // New transaction
+            { date: '2024-12-31 16:32:52', price: 0.00000108481, amount: 212836 }, // New transaction
         ],
     },
     {
@@ -104,11 +105,11 @@ const holdings: Coin[] = [
         symbol: 'peanut-the-squirrel',
         image: 'https://assets.coingecko.com/coins/images/51301/standard/Peanut_the_Squirrel.png?1734941241', // Image placeholder, replace as necessary
         transactions: [
-            { date: '2024-12-26 16:35:01', price: 1, amount: 0.655159 }, // New transaction
+            { date: '2024-12-26 16:35:01', price: 0.655159, amount: 1 }, // New transaction
         ],
     },
     {
-        id: '12',
+        id: '11',
         name: 'AMB',
         symbol: 'amber',
         image: 'https://assets.coingecko.com/coins/images/1041/standard/amb.png?1696502148', // Image placeholder, replace as necessary
@@ -117,7 +118,7 @@ const holdings: Coin[] = [
         ],
     },
     {
-        id: '13',
+        id: '12',
         name: 'MDT',
         symbol: 'measurable-data-token',
         image: 'https://assets.coingecko.com/coins/images/2441/standard/mdt_icon_120x120.png?1711452723', // Image placeholder, replace as necessary
@@ -126,12 +127,49 @@ const holdings: Coin[] = [
         ],
     },
     {
-        id: '14',
+        id: '13',
         name: 'DOGE',
         symbol: 'dogecoin',
         image: 'https://cryptologos.cc/logos/dogecoin-doge-logo.png',
         transactions: [
             { date: '2024-12-26 16:20:04', price: 0.319657, amount: 1.13664987 }, // New transaction
+        ],
+    },
+    {
+        id: '14',
+        name: 'AGLD',
+        symbol: 'adventure-gold',
+        image: 'https://assets.coingecko.com/coins/images/18125/standard/lpgblc4h_400x400.jpg?1696517628',
+        transactions: [
+            { date: '2024-12-31 16:38:32', price: 2.66551, amount: 0.31641872 },
+        ],
+    },
+    {
+        id: '15',
+        name: 'LUNA',
+        symbol: 'terra-luna-2',
+        image: 'https://assets.coingecko.com/coins/images/25767/standard/01_Luna_color.png?1696524851',
+        transactions: [
+            { date: '2024-12-31 16:38:32', price: 0.424088, amount: 0.51239366 },
+        ],
+    },
+    {
+        id: '16',
+        name: 'VET',
+        symbol: 'vechain',
+        image: 'https://assets.coingecko.com/coins/images/1167/standard/VET_Token_Icon.png?1710013505',
+        transactions: [
+            { date: '2024-12-31 16:38:32', price: 0.0437559 , amount: 4.96619234 },
+        ],
+    },
+    {
+
+        id: '17',
+        name: 'BNB',
+        symbol: 'binancecoin',
+        image: 'https://assets.coingecko.com/coins/images/825/standard/bnb-icon2_2x.png?1696501970',
+        transactions: [
+            { date: '2024-12-31 16:25:17', price: 709.148, amount: 0.00301 },
         ],
     },
 ];

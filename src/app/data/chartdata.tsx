@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useCoinPriceDetails } from './coinPriceDetails';
 
 // Interface for the data structure
 interface EarningData {
@@ -7,46 +8,65 @@ interface EarningData {
     transactions: number; // Number of transactions
 }
 
-// Function to generate and export data for charting
-const useChartData = (): EarningData[] => {
+// Function to generate data for charting
+interface ChartDataOptions {
+    userId?: string;
+}
+
+const useChartData = (options?: ChartDataOptions): EarningData[] => {
+    const userId = options?.userId;
     const [data, setData] = useState<EarningData[]>([]); // Store chart data
-    const [earnings, setEarnings] = useState(10); // Starting earnings value (e.g., 10)
+    const { mergedCoins } = useCoinPriceDetails();
+
     const [startTime] = useState(new Date()); // Track the start time
 
+    // Function to calculate and add data
+    const generateData = () => {
+        // Calculate total balance (investment + profit for all coins)
+        const totalBalance = mergedCoins.reduce(
+            (acc: number, coin: { totalInvestment: number; profit: number }) =>
+                acc + coin.totalInvestment + coin.profit,
+            0
+        );
+
+        // Format the total balance to 2 decimal places
+        const formattedTotalBalance = parseFloat(totalBalance.toFixed(5));
+
+        // Calculate total number of transactions (count of transactions across all coins)
+        const totalTransactions = mergedCoins
+            .flatMap((coin) => coin.transactions?.length || 0) // Count the number of transactions
+            .reduce((acc, count) => acc + count, 0); // Sum the number of transactions
+
+        // Create new data entry with additional details
+        const newDataPoint: EarningData = {
+            timestamp: new Date().toLocaleTimeString(), // Current time for the timestamp
+            earnings: formattedTotalBalance, // Total balance as earnings
+            transactions: totalTransactions, // Just the count of transactions (integer)
+        };
+
+        // Update the data state with the new data point
+        setData((prevData) => {
+            const updatedData = [...prevData, newDataPoint];
+
+            // Keep last 10 data points in memory
+            if (updatedData.length >= 10) {
+                return updatedData.slice(-10); // Keep the last 10 data points
+            }
+            return updatedData;
+        });
+    };
+
     useEffect(() => {
+        // Run immediately on the first load
+        generateData();
+
+        // Set up the interval for subsequent updates
         const intervalId = setInterval(() => {
-            // Calculate elapsed minutes
-            const elapsedMinutes = Math.floor((new Date().getTime() - startTime.getTime()) / 10000);
-            
-            // Earnings increase by 1 every minute
-            const newEarnings = earnings + elapsedMinutes; // Increment earnings based on elapsed time
+            generateData();
+        }, 10000); // Update every 10 seconds
 
-            // Random transaction count generation
-            const newTransactions = Math.floor(Math.random() * 50);
-
-            // Create new data entry
-            const newDataPoint: EarningData = {
-                timestamp: new Date().toLocaleTimeString(), // Current time for the timestamp
-                earnings: newEarnings+10,
-                transactions: newTransactions,
-            };
-
-            // Update the data state with the new data point
-            setData((prevData) => {
-                const updatedData = [...prevData, newDataPoint];
-                if (updatedData.length >= 10) {
-                    // Send data (can be an API call or console log here)
-                    console.log("Sending data:", updatedData);
-                    // Keep last 10 data points in memory
-                    return updatedData.slice(-10);
-                }
-                return updatedData;
-            });
-        }, 10000); // Update every minute
-
-        // Cleanup function to clear interval on component unmount
-        return () => clearInterval(intervalId);
-    }, [earnings, startTime]); // Dependencies are earnings and startTime
+        return () => clearInterval(intervalId); // Cleanup interval on component unmount
+    }, [ mergedCoins, userId]); // Re-run if mergedCoins or userId changes
 
     return data;
 };

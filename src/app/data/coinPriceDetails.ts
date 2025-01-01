@@ -66,7 +66,7 @@ export const useCoinPriceDetails = () => {
                     symbol: holding.symbol,
                     totalInvestment: totalInvestment,
                     transactions: holding.transactions,
-                    profit: profitLoss,
+                    profit: profitLoss ,
                 };
 
                 // Add the merged data to the new array
