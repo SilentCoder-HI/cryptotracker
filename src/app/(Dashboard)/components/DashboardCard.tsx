@@ -5,9 +5,9 @@ import { faDollar, faCoins, faArrowUp } from "@fortawesome/free-solid-svg-icons"
 // Define the Lordicon custom element
 interface DashboardCardProps {
   title: string;
-  amount: string;
-  percentage: string;
-  icon: string; // Update this to 'icon' for better clarity
+  amount: string | number; // Amount can be either string or number
+  percentage: number; // Percentage as a number
+  icon: "faDollar" | "faCoins" | "faArrowUp"; // Restrict to known icon strings
 }
 
 const DashboardCard: React.FC<DashboardCardProps> = ({ title, amount, percentage, icon }) => {
@@ -42,7 +42,7 @@ const DashboardCard: React.FC<DashboardCardProps> = ({ title, amount, percentage
         <div className="flex-1">
           <h3 className="text-sm sm:text-lg font-semibold text-gray-300">{title}</h3>
           <p className="text-xl sm:text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent mt-1 sm:mt-2">
-            {amount}
+            {typeof amount === "number" ? amount.toFixed(2) : amount} {/* Format the amount as needed */}
           </p>
         </div>
         {/* Icon section */}
@@ -55,12 +55,11 @@ const DashboardCard: React.FC<DashboardCardProps> = ({ title, amount, percentage
       <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-700">
         <p className="text-xs sm:text-sm text-gray-400">
           <span
-            className={`${parseFloat(percentage) >= 0 ? "text-green-400" : "text-red-400"
-              } font-medium`}
+            className={`${percentage >= 0 ? "text-green-400" : "text-red-400"} font-medium`}
           >
-            {percentage ? `${percentage}` : "0"}%
+            {percentage.toFixed(2)}% {/* Ensure percentage is formatted to 2 decimal places */}
           </span>{" "}
-          than last week
+          than last Month
         </p>
       </div>
     </div>

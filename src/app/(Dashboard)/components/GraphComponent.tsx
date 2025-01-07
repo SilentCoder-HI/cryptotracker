@@ -4,71 +4,244 @@ import {
   AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend,
   BarChart, Bar, LineChart, Line,
 } from 'recharts';
+import Select from 'react-select';
 import { motion, AnimatePresence } from 'framer-motion';
 import { chartAnimation, fadeIn } from 'app/constants/animations';
 import { MotionDiv } from './shared/MotionComponent';
 import { AnimationProvider } from 'app/providers/AnimationProvider';
 import useChartData from 'app/data/chartdata';
 
+const chartTypeOptions = [
+  { value: 'area', label: 'Area Chart' },
+  { value: 'bar', label: 'Bar Chart' },
+  { value: 'line', label: 'Line Chart' },
+];
+
+const timeRangeOptions = [
+  { value: 'Day', label: 'Day' },
+  { value: 'Week', label: 'Week' },
+  { value: '1M', label: '1 Month' },
+  { value: '6M', label: '6 Months' },
+  { value: 'Year', label: 'Year' },
+];
+
 export default function EarningsChart() {
-  const [chartType, setChartType] = useState<'area' | 'bar' | 'line'>('area'); // State to manage chart type
-  const [timeRange, setTimeRange] = useState<'day' | 'week' | 'month' | 'year'>('day'); // State for time range
-  const data = useChartData();
-  const [isLoading, setIsLoading] = useState(false); // Loading state
-  // Data loader with filtering based on time range
-  // useEffect(() => {
-  //   let transformedData = saving.flatMap((month: Month) =>
-  //     month.days.map((day: Days) => ({
-  //       date: `${month.name} ${day.date}`, // Format date
-  //       earnings: day.finalPrice - day.initialPrice, // Calculate earnings
-  //       transactions: day.transactions + 10 || 0, // Transactions count
-  //     }))
-  //   );
-  //   setIsLoading(false); // Set loading to false once data is ready
-  // }, [timeRange]);
+  const [chartType, setChartType] = useState<'area' | 'bar' | 'line'>(
+    localStorage.getItem('chartType') as 'area' | 'bar' | 'line' || 'area'
+  );
+  const [timeRange, setTimeRange] = useState<'Day' | 'Week' | '1M' | '6M' | 'Year'>(
+    localStorage.getItem('timeRange') as 'Day' | 'Week' | '1M' | '6M' | 'Year' || 'Day'
+  );
+  const [showEarnings, setShowEarnings] = useState<boolean>(
+    JSON.parse(localStorage.getItem('showEarnings') || 'true')
+  );
+  const [showTransactions, setShowTransactions] = useState<boolean>(
+    JSON.parse(localStorage.getItem('showTransactions') || 'true')
+  );
 
-  // Handle chart type change
-  const handleChartTypeChange = (type: 'area' | 'bar' | 'line') => {
-    setChartType(type);
+  const data = useChartData({ timestamp: timeRange });
+
+  useEffect(() => {
+    localStorage.setItem('chartType', chartType);
+    localStorage.setItem('timeRange', timeRange);
+    localStorage.setItem('showEarnings', JSON.stringify(showEarnings));
+    localStorage.setItem('showTransactions', JSON.stringify(showTransactions));
+  }, [chartType, timeRange, showEarnings, showTransactions]);
+
+  // Calculate Y-Axis range based on data
+  const getYAxisDomain = () => {
+    if (!data || data.length === 0) return [0, 100];
+    const allValues = data.flatMap((d) => [
+      showEarnings ? d.earnings : null,
+      showTransactions ? d.transactions : null,
+    ]).filter((v) => v !== null);
+
+    const min = Math.min(...allValues);
+    const max = Math.max(...allValues);
+    return [Math.floor(min), Math.ceil(max)];
   };
 
-  // Handle time range change
-  const handleTimeRangeChange = (range: 'day' | 'week' | 'month' | 'year') => {
-    setTimeRange(range);
+  const [yMin, yMax] = getYAxisDomain();
+
+  // Custom function to limit the X-Axis ticks
+  const formatXAxisTicks = (data: any[]) => {
+    const length = data.length;
+    return data.map((d, i) => {
+      if (i === 0 || i === length - 1 || i % Math.ceil(length / 5) === 0) {
+        return d.timestamp || d.date;
+      }
+      return '';
+    });
   };
 
-  // If the data is still loading, show a placeholder
-  if (isLoading) {
-    return <div className="h-[400px] flex items-center justify-center">Loading...</div>;
-  }
+  // Render the chart based on the selected type
+  const renderChart = () => {
+    const formattedData = formatXAxisTicks(data || []);
+    if (chartType === 'area') {
+      return (
+        <AreaChart data={data}>
+          <defs>
+            <linearGradient id="earnings" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#10B981" stopOpacity={0.8} />
+              <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <XAxis dataKey="timestamp" tickFormatter={(tick, i) => formattedData[i]} stroke="#9CA3AF" />
+          <YAxis domain={[yMin, yMax]} stroke="#9CA3AF" />
+          <Tooltip
+            contentStyle={{ backgroundColor: '#1F2937', border: 'none', borderRadius: '0.5rem', color: '#fff' }}
+          />
+          <Legend />
+          {showEarnings && (
+            <Area
+              type="monotone"
+              dataKey="earnings"
+              stroke="#10B981"
+              fillOpacity={0.1}
+              fill="url(#earnings)"
+              name="Earnings"
+            />
+          )}
+          {showTransactions && (
+            <Area
+              type="monotone"
+              dataKey="transactions"
+              stroke="#0000FF"
+              fill="#0000FF"
+              fillOpacity={0.1}
+              name="Transactions"
+            />
+          )}
+        </AreaChart>
+      );
+    }
 
+    if (chartType === 'bar') {
+      return (
+        <BarChart data={data}>
+          <XAxis dataKey="date" tickFormatter={(tick, i) => formattedData[i]} stroke="#9CA3AF" />
+          <YAxis domain={[yMin, yMax]} stroke="#9CA3AF" />
+          <Tooltip
+            contentStyle={{ backgroundColor: '#1F2937', border: 'none', borderRadius: '0.5rem', color: '#fff' }}
+          />
+          <Legend />
+          {showEarnings && <Bar dataKey="earnings" name="Earnings" fill="#10B981" />}
+          {showTransactions && <Bar dataKey="transactions" name="Transactions" fill="#0000FF" />}
+        </BarChart>
+      );
+    }
+
+    return (
+      <LineChart data={data}>
+        <XAxis dataKey="date" tickFormatter={(tick, i) => formattedData[i]} stroke="#9CA3AF" />
+        <YAxis domain={[yMin, yMax]} stroke="#9CA3AF" />
+        <Tooltip
+          contentStyle={{ backgroundColor: '#1F2937', border: 'none', borderRadius: '0.5rem', color: '#fff' }}
+        />
+        <Legend />
+        {showEarnings && (
+          <Line
+            type="monotone"
+            dataKey="earnings"
+            stroke="#10B981"
+            strokeWidth={3}
+            name="Earnings"
+          />
+        )}
+        {showTransactions && (
+          <Line
+            type="monotone"
+            dataKey="transactions"
+            stroke="#0000FF"
+            strokeWidth={3}
+            name="Transactions"
+          />
+        )}
+      </LineChart>
+    );
+  };
+  const customSelectStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      backgroundColor: '#1F2937', // Dropdown background
+      border: state.isFocused ? '2px solid #10B981' : '1px solid #4B5563', // Border color
+      boxShadow: state.isFocused ? '0 0 4px #10B981' : 'none', // Shadow on focus
+      borderRadius: '8px',
+      padding: '2px',
+      color: '#F3F4F6', // Text color
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: '#1F2937', // Dropdown options background
+      borderRadius: '8px',
+      padding: '4px',
+      zIndex: 999, // Ensures dropdown stays above other elements
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? '#10B981' : state.isFocused ? '#374151' : '#1F2937', // Background on hover/selection
+      color: state.isSelected ? '#F9FAFB' : '#D1D5DB', // Text color
+      padding: '8px 12px',
+      cursor: 'pointer',
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: '#F3F4F6', // Selected value color
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: '#9CA3AF', // Placeholder text color
+    }),
+  };
   return (
     <AnimationProvider>
-      <MotionDiv variants={fadeIn} className="space-y-4 sm:space-y-6">
-        {/* Chart Type Switcher */}
-        <div className="flex justify-center space-x-4">
-          {['area', 'bar', 'line'].map(type => (
-            <button
-              key={type}
-              onClick={() => handleChartTypeChange(type as 'area' | 'bar' | 'line')}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition ${chartType === type ? 'bg-emerald-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}`}
-            >
-              {type.charAt(0).toUpperCase() + type.slice(1)} Chart
-            </button>
-          ))}
+      <MotionDiv variants={fadeIn} className="flex flex-col space-y-4 sm:space-y-6">
+        <div className="flex justify-around">
+          {/* Chart Type Switcher */}
+          <div className="flex justify-around bg-gray-900 space-x-4 sm:space-x-8 items-center text-center">
+            <label className="text-sm text-gray-300">Chart Type:</label>
+            <Select
+              options={chartTypeOptions}
+              value={chartTypeOptions.find(option => option.value === chartType)}
+              onChange={(option) => setChartType(option?.value || 'area')}
+              styles={customSelectStyles}
+              className="w-48"
+            />
+          </div>
+
+          {/* Time Range Switcher */}
+          <div className="flex justify-center space-x-4 sm:space-x-8 items-center text-center">
+            <label className="text-sm text-gray-300">Time Range:</label>
+            <Select
+              options={timeRangeOptions}
+              value={timeRangeOptions.find(option => option.value === timeRange)}
+              onChange={(option) => setTimeRange(option?.value || 'Day')}
+              className="w-48"
+              styles={ customSelectStyles}
+            />
+          </div>
         </div>
 
-        {/* Time Range Switcher */}
-        <div className="flex justify-center space-x-4">
-          {['day', 'week', 'month', 'year'].map(range => (
-            <button
-              key={range}
-              onClick={() => handleTimeRangeChange(range as 'day' | 'week' | 'month' | 'year')}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition ${timeRange === range ? 'bg-emerald-500 text-white' : 'bg-gray-700 text-gray-300 hover:bg-gray-600'}`}
-            >
-              {range.charAt(0).toUpperCase() + range.slice(1)}
-            </button>
-          ))}
+        {/* Visibility Toggles */}
+        <div className="flex justify-center space-x-8">
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              checked={showEarnings}
+              onChange={() => setShowEarnings(!showEarnings)}
+              className="mr-2"
+            />
+            <label className="text-gray-300">Show Earnings</label>
+          </div>
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              checked={showTransactions}
+              onChange={() => setShowTransactions(!showTransactions)}
+              className="mr-2"
+            />
+            <label className="text-gray-300">Show Transactions</label>
+          </div>
         </div>
 
         {/* Chart */}
@@ -82,59 +255,7 @@ export default function EarningsChart() {
             className="h-[300px] sm:h-[400px]"
           >
             <ResponsiveContainer width="100%" height="100%">
-              {chartType === 'area' ? (
-                <AreaChart data={data}>
-                  <defs>
-                    <linearGradient id="earnings" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#10B981" stopOpacity={0.8} />
-                      <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <XAxis dataKey="timestamp" stroke="#9CA3AF" />
-                  <YAxis stroke="#9CA3AF" />
-                  <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: 'none', borderRadius: '0.5rem', color: '#fff' }} />
-                  <Legend />
-                  <Area
-                    type="monotone"
-                    dataKey="earnings"
-                    stroke="#10B981"
-                    fillOpacity={0.1}
-                    fill="url(#earnings)"
-                    name="Earnings"
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="transactions"
-                    stroke="#0000FF"  // Red stroke color
-                    fill="#0000FF"    // Red fill color
-                    fillOpacity={0.1} // Make fill slightly transparent for a better effect
-                    filter="url(#blurEffect)"  // Apply blur filter
-                    name="transactions"
-                  />
-                </AreaChart>
-              ) : chartType === 'bar' ? (
-                <BarChart data={data}>
-                  <XAxis dataKey="date" stroke="#9CA3AF" />
-                  <YAxis stroke="#9CA3AF" />
-                  <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: 'none', borderRadius: '0.5rem', color: '#fff' }} />
-                  <Legend />
-                  <Bar dataKey="earnings" name="Earnings" fill="#10B981" />
-                </BarChart>
-              ) : (
-                <LineChart data={data}>
-                  <XAxis dataKey="date" stroke="#9CA3AF" />
-                  <YAxis stroke="#9CA3AF" />
-                  <Tooltip contentStyle={{ backgroundColor: '#1F2937', border: 'none', borderRadius: '0.5rem', color: '#fff' }} />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="earnings"
-                    stroke="#10B981"
-                    strokeWidth={3}
-                    name="Earnings"
-                  />
-                </LineChart>
-              )}
+              {renderChart()}
             </ResponsiveContainer>
           </motion.div>
         </AnimatePresence>

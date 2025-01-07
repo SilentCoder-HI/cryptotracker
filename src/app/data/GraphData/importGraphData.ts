@@ -1,24 +1,26 @@
-"use client"
-import { useEffect } from 'react'
+'use client'
+
+import { useEffect, useState } from 'react'
 import { ImportGraphData } from '@components/actions/useraction'
 
-// interface GraphData {
-//     userId: string;
-//     date: string;
-//     values: any[];
-// }
+interface GraphData {
+    userId: string;
+    months: {
+        month: string;
+        values: { amount: number, date: Date, add: number }[];  // 'values' includes 'add' as well
+    }[];
+}
 
 const ImportGraphDataFunc = () => {
-    // const [graphData, setGrapshData] = useState<GraphData | null>(null)
-    const userid = "12345"
+    const [graphData, setGraphData] = useState<GraphData | null>(null);
+    const userid = "user123"
 
     useEffect(() => {
         const fetchGraphData = async () => {
             try {
-                const response = await ImportGraphData(userid)
+                const response: GraphData | null = await ImportGraphData(userid)
                 if (response) {
-                    console.log(response)
-                    // setGraphData(data)
+                    setGraphData(response)
                 }
             } catch (error) {
                 console.error("Error fetching graph data", error)
@@ -30,7 +32,9 @@ const ImportGraphDataFunc = () => {
         return () => {
             // Cleanup if necessary
         }
-    }, [userid])
+    }, [userid])  // You can add more dependencies if necessary
+
+    return graphData;
 }
 
-export default ImportGraphDataFunc
+export default ImportGraphDataFunc;

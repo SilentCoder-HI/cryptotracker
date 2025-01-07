@@ -66,7 +66,7 @@ export const useCoinPriceDetails = () => {
                     symbol: holding.symbol,
                     totalInvestment: totalInvestment,
                     transactions: holding.transactions,
-                    profit: profitLoss ,
+                    profit: profitLoss,
                 };
 
                 // Add the merged data to the new array
@@ -83,7 +83,7 @@ export const useCoinPriceDetails = () => {
         // Interval for fetching data every 30 seconds (30000 milliseconds)
         const interval = setInterval(() => {
             dataUpdate(); // Update merged data
-        }, 30000); // 30 seconds interval
+        }, 60000); // 60(s) MIN
 
         // Cleanup the interval on component unmount or when coins change
         return () => clearInterval(interval);

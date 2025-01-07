@@ -1,31 +1,51 @@
-// import { saveGraphValues, GraphValue } from "@components/actions/useraction";
-// import { trackError } from "@components/utils/errorTracking";
+"use client";
+import { useState, useEffect } from "react";
+import { useCoinPriceDetails } from "../coinPriceDetails";
+// import { saveGraphValues } from "@components/actions/useraction";
 
-// interface ExportGraphDataParams {
-//     userId: string;
-//     values: GraphValue[];
-// }
+const MAX_ARRAY_SIZE = 5;
 
-// // Function that exports Graph data
-// async function exportGraphData({ userId, values }: ExportGraphDataParams): Promise<boolean> {
-//     try {
-//         // Call the saveGraphValues function to save the graph data
-//         const result = await saveGraphValues(userId, values);
+interface GraphData {
+    date: string;
+    amount: number;
+}
 
-//         // Optionally log the result or perform additional actions if necessary
-//         console.log("Graph data exported successfully:", result);
+const UseGraphData = () => {
+    const { mergedCoins = [] } = useCoinPriceDetails();
+    const totalBalance = mergedCoins.reduce(
+        (acc, coin) => acc + coin.totalInvestment + coin.profit,
+        0
+    );
+    const [graphValues, setGraphValues] = useState<GraphData[]>([]);
 
-//         return true;
-//     } catch (error) {
-//         // Enhanced error handling
-//         const errorMessage = error instanceof Error ? error.message : "Unknown error";
-//         console.error("Error exporting graph data:", errorMessage);
+    useEffect(() => {
+        if (totalBalance !== undefined) {
+            console.log("Current total balance:", totalBalance);
 
-//         // Track the error with more detailed context
-//         trackError(error, { userId, action: 'exportGraphData', message: errorMessage });
+            const interval = setInterval(() => {
+                const dateNow = new Date().toISOString(); // Get current date and time in ISO format
 
-//         return false;
-//     }
-// }
+                setGraphValues((prevValues) => {
+                    const newValues = [
+                        ...prevValues,
+                        {
+                            date: dateNow,
+                            amount: totalBalance, // Use the `totalBalance` value
+                        },
+                    ];
 
-// export { exportGraphData };
+                    if (newValues.length > MAX_ARRAY_SIZE) {
+                        newValues.shift(); // Remove the oldest entry if the array exceeds the maximum size
+                    }
+
+                    return newValues;
+                });
+            }, 60000); // 60 seconds interval
+
+            return () => clearInterval(interval); // Cleanup the interval on unmount
+        } else {
+            console.log("No total balance available");
+        }
+    }, [totalBalance]); // Re-run the effect when the `totalBalance` changes
+};
+export default UseGraphData;
