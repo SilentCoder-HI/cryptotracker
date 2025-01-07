@@ -13,6 +13,7 @@ const DashboardPage: React.FC = () => {
     const [activeComponent, setActiveComponent] = useState<ActiveComponent>('dashboard');
     const [currency, setCurrency] = useState<string>('BTC');
     const [timeZone, setTimeZone] = useState<string>('UTC+00:00');
+    console.log(currency,timeZone)
     // Function to handle settings change
     const handleSettingsChange = (settings: { defaultCurrency: string; timeZone: string }) => {
         setCurrency(settings.defaultCurrency);

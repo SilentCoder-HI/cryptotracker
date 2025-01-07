@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useCoinPriceDetails } from './coinPriceDetails';
 import ImportGraphDataFunc from './GraphData/importGraphData';
 
 // Interface for the data structure
@@ -20,14 +19,6 @@ interface GraphData {
         }[]; 
     }[];
 }
-
-interface data {
-    value: {
-        date: string;
-        amount: number;
-    }[];
-}
-
 const useChartData = ({ timestamp }: { timestamp: string }) => {
     const [data, setData] = useState<EarningData[]>([]); // Store chart data
     const [graphData, setGraphData] = useState<GraphData | null>(null);
