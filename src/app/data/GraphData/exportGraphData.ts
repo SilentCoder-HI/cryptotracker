@@ -17,7 +17,7 @@ const UseGraphData = () => {
         0
     );
     const [graphValues, setGraphValues] = useState<GraphData[]>([]);
-
+    console.log(graphValues)
     useEffect(() => {
         if (totalBalance !== undefined) {
             console.log("Current total balance:", totalBalance);

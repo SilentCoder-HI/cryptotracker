@@ -6,8 +6,8 @@ interface MotionComponentProps {
   children: ReactNode;
   className?: string;
   variants?: any;
-  initial?: any;
-  animate?: any;
+  initial?: string;
+  animate?: string;
   exit?: any;
   whileHover?: any;
   whileTap?: any;
