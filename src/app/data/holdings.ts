@@ -53,6 +53,7 @@ const holdings: Coin[] = [
             { date: '2024-12-23 17:53:22', price: 0.000170802, amount: 1000 },
             { date: '2025-01-06 18:13:16', price: 0.000197445, amount: 605.55 },
             { date: '2025-01-06 18:13:16', price: 0, amount: 0.7185 },
+            { date: '2025-01-12', price: 0.000165829, amount: 6030.31 },
         ],
     },
     {
@@ -97,6 +98,9 @@ const holdings: Coin[] = [
             { date: '2024-12-31 16:32:52', price: 0.00000108481, amount: 212836 }, // New transaction
             { date: '2025-01-06 18:10:26', price: 0.00000128576, amount: 600000 },// New transaction
             { date: '2025-01-06 18:10:26', price: 0, amount: 2125.5287 },// New transaction
+            { date: '2025-01-08', price: 0.00000115938, amount: 888406.7 },
+            { date: '2025-01-12', price: 0.00000115512, amount: 1000000 },
+            { date: '2025-01-08', price: 0.00000115513, amount: 317804.7 },
         ],
     },
     {
@@ -108,6 +112,7 @@ const holdings: Coin[] = [
             {
                 date: '2024-12-23 17:49:47', price: 0.99, amount: 0.17009055
             },
+
         ],
     },
     {
@@ -118,6 +123,7 @@ const holdings: Coin[] = [
         transactions: [
             { date: '2024-12-26 16:35:01', price: 0.655159, amount: 1 }, // New transaction
             { date: '2024-12-26 16:35:01', price: 0, amount: 0.00022118 }, // New transaction
+            { date: '2025-01-08', price: 0.570508, amount: 1 },
         ],
     },
     {
@@ -186,6 +192,8 @@ const holdings: Coin[] = [
         image: 'https://assets.coingecko.com/coins/images/825/standard/bnb-icon2_2x.png?1696501970',
         transactions: [
             { date: '2024-12-31 16:25:17', price: 709.148, amount: 0.00301 },
+            { date: "2025-01-08", price: 696.221, amount: 0.00143632 },
+            { date: "2025-01-12", price: 700.585, amount: 0.00071369 },
         ],
     },
     {
@@ -195,6 +203,7 @@ const holdings: Coin[] = [
         image: 'https://cryptologos.cc/logos/ethereum-eth-logo.png',
         transactions: [
             { date: '2025-01-06 18:12:49', price: 3666.81, amount: 0.00005 },
+            { date: '2025-01-12', price: 3307.23, amount: 0.00015118 },
         ],
     },
     {
@@ -225,7 +234,7 @@ const holdings: Coin[] = [
             { date: '2024-12-31 16:40:59', price: 1.00115, amount: 0.59931063 },
             { date: '2024-12-26 16:13:50', price: 1.08658985, amount: 1.00315 },
             { date: '2024-12-23 20:59:38', price: 1.00365, amount: 0.21217009 },
-            { date: '2024-12-23 20:59:38', price: 1.00285 , amount: 0.08374463 },
+            { date: '2024-12-23 20:59:38', price: 1.00285, amount: 0.08374463 },
         ],
     },
     {
@@ -235,9 +244,55 @@ const holdings: Coin[] = [
         image: 'https://assets.coingecko.com/coins/images/53022/standard/bio.jpg?1735011002',
         transactions: [
             { date: '2025-01-03 00:00:00', price: 0, amount: 0.01539477 },
+            { date: '2025-01-03 00:00:00', price: 0.586304, amount: 1 },
         ],
     },
-
+    {
+        id: '23',
+        name: 'GRT',
+        symbol: 'the-graph',
+        image: 'https://assets.coingecko.com/coins/images/13397/standard/Graph_Token.png?1696513159',
+        transactions: [
+            { date: '2025-01-12', price: 0.205813, amount: 1.4259805 },
+        ],
+    },
+    {
+        id: '24',
+        name: 'CGPT',
+        symbol: 'chaingpt',
+        image: 'https://assets.coingecko.com/coins/images/29306/standard/200x200.png?1696528257',
+        transactions: [
+            { date: '2025-01-12', price: 0.307584, amount: 1 },
+        ],
+    },
+    {
+        id: '25',
+        name: 'AIXBT',
+        symbol: 'aixbt',
+        image: 'https://assets.coingecko.com/coins/images/51784/standard/3.png?1731981138',
+        transactions: [
+            { date: '2025-01-12', price: 0.473812, amount: 1 },
+        ],
+    },
+    {
+        id: '26',
+        name: 'BTC',
+        symbol: 'bitcoin',
+        image: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=040',
+        transactions: [
+            { date: '2025-01-08', price: 94886.2, amount: 0.00001054 },
+        ],
+    },
+    {
+        id: '27',
+        name: 'TON',
+        symbol: 'the-open-network',
+        image: 'https://assets.coingecko.com/coins/images/17980/standard/photo_2024-09-10_17.09.00.jpeg?1725963446',
+        transactions: [
+            { date: '2025-01-08', price: 5.30111, amount: 0.03435474 },
+            { date: '2025-01-08', price: 5.29006, amount: 0.09 },
+        ],
+    }
 ];
 
 // Function to add a new coin to holdings

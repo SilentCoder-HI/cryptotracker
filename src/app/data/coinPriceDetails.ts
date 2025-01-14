@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { holdings } from './holdings';  // Assuming holdings is imported here
 import { useCoins } from '../(Dashboard)/hook/useCoins';
-
+import { holdings } from './holdings';
 export const useCoinPriceDetails = () => {
     const { coins, loading, error } = useCoins();  // Fetch data using useCoins
     const [mergedData, setMergedData] = useState([]); // Manage merged data
@@ -83,7 +82,7 @@ export const useCoinPriceDetails = () => {
         // Interval for fetching data every 30 seconds (30000 milliseconds)
         const interval = setInterval(() => {
             dataUpdate(); // Update merged data
-        }, 60000); // 60(s) MIN
+        }, 600000); // 600(s) = 10 MIN
 
         // Cleanup the interval on component unmount or when coins change
         return () => clearInterval(interval);

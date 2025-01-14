@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react';
-import ImportGraphDataFunc from './GraphData/importGraphData';
+import { useEffect, useState, useCallback } from 'react';
+import { ImportGraphData } from '@components/actions/useraction';
 
 // Interface for the data structure
 type EarningData = {
     timestamp: string; // Timestamp in milliseconds (current time)
+    earnings: number;
+    transactions: number;
 };
 
 // Interface for the graph data structure
 interface GraphData {
-    _id: string;
     userId: string;
     months: {
         month: string;
@@ -16,26 +17,59 @@ interface GraphData {
             amount: number;
             date: string;
             add: number;
-        }[]; 
+        }[];
     }[];
 }
-const useChartData = ({ timestamp }: { timestamp: string }) => {
-    const [data, setData] = useState<EarningData[]>([]); // Store chart data
-    const [graphData, setGraphData] = useState<GraphData | null>(null);
 
-    const Graphdata = ImportGraphDataFunc();
+const useChartData = ({ timestamp }: { timestamp: string }) => {
+    const [data, setData] = useState<EarningData[]>([
+        {
+            timestamp,
+            earnings: Math.floor(Math.random() * 500),
+            transactions: Math.floor(Math.random() * 500)
+        },
+        {
+            timestamp,
+            earnings: Math.floor(Math.random() * 500),
+            transactions: Math.floor(Math.random() * 500)
+        },
+        {
+            timestamp,
+            earnings: Math.floor(Math.random() * 500),
+            transactions: Math.floor(Math.random() * 500)
+        },
+        {
+            timestamp,
+            earnings: Math.floor(Math.random() * 500),
+            transactions: Math.floor(Math.random() * 500)
+        }
+    ]); // Initially empty data
+    const [graphData, setGraphData] = useState<GraphData | null>(null);
+    const userid = "user123";
+
+    const fetchGraphData = useCallback(async () => {
+        try {
+            const response: GraphData | null = await ImportGraphData(userid);
+            if (response) {
+                setGraphData(response);
+            }
+        } catch (error) {
+            console.error("Error fetching graph data", error);
+        }
+    }, [userid]);
+
     useEffect(() => {
-        setGraphData(Graphdata); // Assuming Graphdata is fetched here
-    }, [Graphdata]);
+        fetchGraphData(); // Fetch data on component mount
+    }, [fetchGraphData]);
 
     // Calculate the range (in days) based on the 'timestamp' prop value
     const getRangeInDays = (range: string): number => {
         switch (range) {
             case 'Day': return 1;       // 1 day
-            case 'Week': return 7;       // 7 days
+            case 'Week': return 7;      // 7 days
             case '1M': return 30;      // 30 days
             case '6M': return 180;     // 6 months
-            case 'Year': return 365;     // 1 year
+            case 'Year': return 365;   // 1 year
             default: return 30;        // Default to 30 days if no valid range
         }
     };
@@ -43,22 +77,19 @@ const useChartData = ({ timestamp }: { timestamp: string }) => {
     // Function to filter data based on the range
     const filterDataByRange = (data: EarningData[], rangeInDays: number): EarningData[] => {
         const now = new Date();
-        // Set the time part to 00:00:00 to ensure we're comparing dates without time interference
-        now.setHours(0, 0, 0, 0);
+        now.setHours(0, 0, 0, 0); // Set the time part to 00:00:00 to ensure we're comparing dates without time interference
 
         return data.filter((entry) => {
             const entryDate = new Date(entry.timestamp);
-            // Set the time part of the entry date to 00:00:00 as well
-            entryDate.setHours(0, 0, 0, 0);
+            entryDate.setHours(0, 0, 0, 0); // Set the time part of the entry date to 00:00:00 as well
 
             const diff = now.getTime() - entryDate.getTime();
-            // Include entries that fall within the range
-            return diff <= rangeInDays * 24 * 60 * 60 * 1000;
+            return diff <= rangeInDays * 24 * 60 * 60 * 1000; // Include entries that fall within the range
         });
     };
 
     // Generate the chart data based on the current graph data
-    const generateData = () => {
+    const generateData = useCallback(() => {
         if (!graphData) return; // Ensure graphData is loaded
 
         const combinedData: { [key: string]: { amount: number; add: number; date: string } } = {};
@@ -76,37 +107,25 @@ const useChartData = ({ timestamp }: { timestamp: string }) => {
             });
         });
 
-        const dailyEarnings: EarningData[] = Object.values(combinedData).map((dataPoint) => {
-            return {
-                timestamp: dataPoint.date, // Use the actual date as the timestamp
-                earnings: dataPoint.amount, // Total cumulative earnings
-                transactions: dataPoint.add, // Number of transactions so far
-            };
-        });
+        const dailyEarnings: EarningData[] = Object.values(combinedData).map((dataPoint) => ({
+            timestamp: dataPoint.date, // Use the actual date as the timestamp
+            earnings: dataPoint.amount, // Total cumulative earnings
+            transactions: dataPoint.add, // Number of transactions so far
+        }));
 
-        // Get the range in days based on the timestamp prop
-        const rangeInDays = getRangeInDays(timestamp); // timestamp is passed as '1d', '1w', etc.
+        const rangeInDays = getRangeInDays(timestamp); // Get the range in days based on the timestamp prop
+        const filteredData = filterDataByRange(dailyEarnings, rangeInDays); // Filter the data based on the time range
 
-        // Filter the data based on the time range (e.g., 1 day, 1 week, etc.)
-        const filteredData = filterDataByRange(dailyEarnings, rangeInDays);
-
-        // Update the data state with the filtered data
-        setData(filteredData);
-    };
+        setData(filteredData); // Update the data state with the filtered data
+    }, [graphData, timestamp]);
 
     useEffect(() => {
-        // Run immediately on the first load
-        generateData();
+        generateData(); // Run immediately on the first load
 
-        // Set up the interval for subsequent updates
-        const intervalId = setInterval(() => {
-            generateData();
-        }, 60000); // 1 MIN interval
-
+        const intervalId = setInterval(generateData, 60000); // Set up the interval for subsequent updates
         return () => clearInterval(intervalId); // Cleanup interval on component unmount
-    }, [graphData, timestamp]); // Re-run if graphData or timestamp changes
+    }, [generateData]); // Re-run if generateData changes
 
-    console.log(data);
     return data;
 };
 

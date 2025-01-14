@@ -1,7 +1,10 @@
-import type { NextConfig } from "next";
+import { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    domains: ['cryptologos.cc','s2.coinmarketcap.com','assets.coingecko.com'], // Add the external domain here
+  },
+  // other configuration options can go here
 };
 
 export default nextConfig;

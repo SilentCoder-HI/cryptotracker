@@ -6,7 +6,7 @@ import { faArrowLeft, faArrowRight, faCaretDown, faCaretUp } from "@fortawesome/
 
 type SortDirection = "asc" | "desc" | "normal";
 
-const coins: React.FC = () => {
+const Coins: React.FC = () => {
     const { mergedCoins, loading: initialLoading, error } = useCoinPriceDetails();
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
@@ -190,4 +190,4 @@ const coins: React.FC = () => {
     );
 };
 
-export default coins;
+export default Coins;

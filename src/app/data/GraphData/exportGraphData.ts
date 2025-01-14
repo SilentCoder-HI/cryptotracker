@@ -48,4 +48,15 @@ const UseGraphData = () => {
         }
     }, [totalBalance]); // Re-run the effect when the `totalBalance` changes
 };
+
+export function exportGraphData(data: YourSpecificType) {
+    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'graphData.json';
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
 export default UseGraphData;

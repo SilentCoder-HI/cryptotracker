@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useCoinPriceDetails } from "app/data/coinPriceDetails";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import Image from 'next/image';
 
 type SortDirection = "asc" | "desc" | "normal";
 
@@ -132,10 +133,12 @@ const Coins: React.FC = () => {
                                     className="grid grid-cols-4 border-b border-gray-600"
                                 >
                                     <div className="p-4 flex items-center">
-                                        <img
+                                        <Image
                                             src={coin.image || "https://example.com/fallback-image-url.png"}
                                             alt={coin.name}
                                             className="w-10 h-10 rounded-full mr-2"
+                                            width={40}
+                                            height={40}
                                         />
                                         <span className="text-white">{coin.name}</span>
                                     </div>
@@ -164,7 +167,8 @@ const Coins: React.FC = () => {
                 </div>
             </div>
 
-            <div className="flex justify-between mt-4">
+
+            <div className="flex justify-between mt-4 items-center">
                 <button
                     onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                     className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-400"
@@ -172,9 +176,26 @@ const Coins: React.FC = () => {
                 >
                     Previous
                 </button>
-                <span className="text-white">
-                    Page {currentPage} of {totalPages}
+
+                <span className="text-white flex items-center gap-2">
+                    <button
+                        className={`text-white w-10 h-10 bg-gray-900 p-2 hover:text-gray-400 focus:outline-none ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        disabled={currentPage === 1}
+                    >
+                        {currentPage === 1 ? '' : currentPage - 1}
+                    </button>
+
+                    <span className="font-semibold bg-gray-900 p-2 w-10 h-10 text-center">{currentPage}</span>
+
+                    <button
+                        className="bg-gray-900 w-10 h-10 p-2 text-white hover:text-gray-400 focus:outline-none"
+                        onClick={() => setCurrentPage((prev) => prev + 1)}
+                    >
+                        {currentPage + 1}
+                    </button>
                 </span>
+
                 <button
                     onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                     className="px-4 py-2 bg-blue-500 text-white rounded-md disabled:bg-gray-400"
@@ -183,6 +204,7 @@ const Coins: React.FC = () => {
                     Next
                 </button>
             </div>
+
         </motion.div>
     );
 };

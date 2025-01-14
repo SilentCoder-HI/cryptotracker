@@ -1,37 +1,22 @@
 import { GraphValue } from "../actions/useraction";
 
-interface CachedData {
-    timestamp: number;
-    data: GraphValue[];
+interface CacheItem {
+    value: any;
+    expiry: number;
 }
 
-const cache = new Map<string, CachedData>();
-const CACHE_TTL = 60 * 1000; // 1 minute cache TTL
+const cache: Record<string, CacheItem> = {};
 
-export function getFromCache(userId: string): GraphValue[] | null {
-    const cachedData = cache.get(userId);
-    if (!cachedData) return null;
+export function setCache(key: string, value: any, ttl: number) {
+    const expiry = Date.now() + ttl;
+    cache[key] = { value, expiry };
+}
 
-    // Check if cache is still valid
-    if (Date.now() - cachedData.timestamp > CACHE_TTL) {
-        cache.delete(userId);
-        return null;
+export function getCache(key: string) {
+    const item = cache[key];
+    if (item && item.expiry > Date.now()) {
+        return item.value;
     }
-
-    return cachedData.data;
-}
-
-export function setToCache(userId: string, data: GraphValue[]): void {
-    cache.set(userId, {
-        timestamp: Date.now(),
-        data
-    });
-}
-
-export function clearCache(userId?: string): void {
-    if (userId) {
-        cache.delete(userId);
-    } else {
-        cache.clear();
-    }
+    delete cache[key]; // Remove expired item
+    return null;
 }

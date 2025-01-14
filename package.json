@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "build": "react-scripts build",
+    "start": "react-scripts start",
+    "lint": "next lint",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
@@ -22,7 +24,8 @@
     "react-dom": "^18.3.1",
     "react-select": "^5.9.0",
     "recharts": "^2.15.0",
-    "seedrandom": "^3.0.5"
+    "seedrandom": "^3.0.5",
+    "axios": "^0.21.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
