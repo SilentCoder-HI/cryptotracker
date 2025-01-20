@@ -15,37 +15,6 @@ interface Coin {
 const holdings: Coin[] = [
     {
         id: '1',
-        name: '1000SATS',
-        symbol: '1000sats-ordinals',
-        image: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
-        transactions: [
-            { date: '2024-12-23 17:58:40', price: 0.000176712, amount: 1000 },
-            { date: '2024-12-23 17:58:40', price: 0, amount: 0.0573 },
-        ],
-    },
-    {
-        id: '2',
-        name: 'LUNC',
-        symbol: 'terra-luna',
-        image: 'https://cryptologos.cc/logos/terra-luna-luna-logo.png',
-        transactions: [
-            { date: '2024-12-23 17:57:59', price: 0.000113755, amount: 1000 },
-            { date: '2024-12-23 17:57:59', price: 0, amount: 0.1719 },
-
-        ],
-    },
-    {
-        id: '3',
-        name: 'WIN',
-        symbol: 'wink',
-        image: 'https://s2.coinmarketcap.com/static/img/coins/64x64/4206.png',
-        transactions: [
-            { date: '2024-12-23 17:54:46', price: 0.000108351, amount: 1800 },
-            { date: '2024-12-23 17:54:46', price: 0, amount: 0.0215 },
-        ],
-    },
-    {
-        id: '4',
         name: 'FLOKI',
         symbol: 'FLOKI',
         image: 'https://cryptologos.cc/logos/floki-inu-floki-logo.png',
@@ -57,7 +26,7 @@ const holdings: Coin[] = [
         ],
     },
     {
-        id: '5',
+        id: '2',
         name: 'BONK',
         symbol: 'BONK',
         image: 'https://cryptologos.cc/logos/bonk1-bonk-logo.png?v=040',
@@ -67,17 +36,7 @@ const holdings: Coin[] = [
         ],
     },
     {
-        id: '6',
-        name: 'SHIB',
-        symbol: 'shiba-inu',
-        image: 'https://cryptologos.cc/logos/shiba-inu-shib-logo.png',
-        transactions: [
-            { date: '2024-12-23 17:51:24', price: 0.0000221033, amount: 10394.58 },
-            { date: '2024-12-23 17:51:24', price: 0, amount: 0.6934 },
-        ],
-    },
-    {
-        id: '7',
+        id: '3',
         name: 'PEPE',
         symbol: 'PEPE',
         image: 'https://cryptologos.cc/logos/pepe-pepe-logo.png',
@@ -87,7 +46,7 @@ const holdings: Coin[] = [
         ],
     },
     {
-        id: '8',
+        id: '4',
         name: 'BTTC',
         symbol: 'bittorrent',
         image: 'https://cryptologos.cc/logos/bittorrent-btt-logo.png',
@@ -99,24 +58,13 @@ const holdings: Coin[] = [
             { date: '2025-01-06 18:10:26', price: 0.00000128576, amount: 600000 },// New transaction
             { date: '2025-01-06 18:10:26', price: 0, amount: 2125.5287 },// New transaction
             { date: '2025-01-08', price: 0.00000115938, amount: 888406.7 },
-            { date: '2025-01-12', price: 0.00000115512, amount: 1000000 },
             { date: '2025-01-08', price: 0.00000115513, amount: 317804.7 },
+            { date: '2025-01-12', price: 0.00000115512, amount: 1000000 },
+            { date: '2025-01-16', price: 0.00000115512, amount: 1000000 },
         ],
     },
     {
-        id: '9',
-        name: 'USDT',
-        symbol: 'tether',
-        image: 'https://cryptologos.cc/logos/tether-usdt-logo.png',
-        transactions: [
-            {
-                date: '2024-12-23 17:49:47', price: 0.99, amount: 0.17009055
-            },
-
-        ],
-    },
-    {
-        id: '10',
+        id: '5',
         name: 'PNUT',
         symbol: 'peanut-the-squirrel',
         image: 'https://assets.coingecko.com/coins/images/51301/standard/Peanut_the_Squirrel.png?1734941241', // Image placeholder, replace as necessary
@@ -127,17 +75,7 @@ const holdings: Coin[] = [
         ],
     },
     {
-        id: '11',
-        name: 'AMB',
-        symbol: 'amber',
-        image: 'https://assets.coingecko.com/coins/images/1041/standard/amb.png?1696502148', // Image placeholder, replace as necessary
-        transactions: [
-            { date: '2024-12-26 16:24:57', price: 0.00740351, amount: 49.07644172 }, // New transaction
-            { date: '2024-12-26 16:24:57', price: 0, amount: 0.0900 }, // New transaction
-        ],
-    },
-    {
-        id: '12',
+        id: '6',
         name: 'MDT',
         symbol: 'measurable-data-token',
         image: 'https://assets.coingecko.com/coins/images/2441/standard/mdt_icon_120x120.png?1711452723', // Image placeholder, replace as necessary
@@ -147,17 +85,18 @@ const holdings: Coin[] = [
         ],
     },
     {
-        id: '13',
+        id: '7',
         name: 'DOGE',
         symbol: 'dogecoin',
         image: 'https://cryptologos.cc/logos/dogecoin-doge-logo.png',
         transactions: [
             { date: '2024-12-26 16:20:04', price: 0.319657, amount: 1.13664987 }, // New transaction
             { date: '2024-12-26 16:20:04', price: 0, amount: 0.0001 }, // New transaction
+            { date: '2025-01-19 21:13:23', price: 0.392194, amount: 2 }, // New transaction
         ],
     },
     {
-        id: '14',
+        id: '8',
         name: 'AGLD',
         symbol: 'adventure-gold',
         image: 'https://assets.coingecko.com/coins/images/18125/standard/lpgblc4h_400x400.jpg?1696517628',
@@ -167,17 +106,7 @@ const holdings: Coin[] = [
         ],
     },
     {
-        id: '15',
-        name: 'LUNA',
-        symbol: 'terra-luna-2',
-        image: 'https://assets.coingecko.com/coins/images/25767/standard/01_Luna_color.png?1696524851',
-        transactions: [
-            { date: '2024-12-31 16:38:32', price: 0.424088, amount: 0.51239366 },
-            { date: '2024-12-31 16:38:32', price: 0, amount: 0.0001 },
-        ],
-    },
-    {
-        id: '16',
+        id: '9',
         name: 'VET',
         symbol: 'vechain',
         image: 'https://assets.coingecko.com/coins/images/1167/standard/VET_Token_Icon.png?1710013505',
@@ -186,7 +115,7 @@ const holdings: Coin[] = [
         ],
     },
     {
-        id: '17',
+        id: '10',
         name: 'BNB',
         symbol: 'binancecoin',
         image: 'https://assets.coingecko.com/coins/images/825/standard/bnb-icon2_2x.png?1696501970',
@@ -194,51 +123,50 @@ const holdings: Coin[] = [
             { date: '2024-12-31 16:25:17', price: 709.148, amount: 0.00301 },
             { date: "2025-01-08", price: 696.221, amount: 0.00143632 },
             { date: "2025-01-12", price: 700.585, amount: 0.00071369 },
+            { date: "2025-01-18 14:57:02", price: 706.863, amount: 0.00046685 },
         ],
     },
     {
-        id: '18',
+        id: '11',
         name: 'ETH',
         symbol: 'ethereum',
         image: 'https://cryptologos.cc/logos/ethereum-eth-logo.png',
         transactions: [
             { date: '2025-01-06 18:12:49', price: 3666.81, amount: 0.00005 },
             { date: '2025-01-12', price: 3307.23, amount: 0.00015118 },
+            { date: '2025-01-16', price: 3384.76, amount: 0.00015072 },
         ],
     },
     {
-        id: '19',
+        id: '12',
         name: 'SOL',
         symbol: 'solana',
         image: 'https://cryptologos.cc/logos/solana-sol-logo.png',
         transactions: [
             { date: '2025-01-06 18:11:32', price: 218.951, amount: 0.001 },
             { date: '2025-01-06 18:03:59', price: 219.154, amount: 0.0022 },
+            { date: '2025-01-16 16:48:02', price: 211.719, amount: 0.00472324 },
+            { date: '2025-01-18 14:57:23', price: 240.198, amount: 0.00137386 },
+            { date: '2025-01-18 14:57:23', price: 283.123, amount: 0.00223117 },
+            { date: '2025-01-20 14:22:46', price: 271.219, amount: 0.00398105 },
         ],
     },
     {
-        id: '20',
+        id: '13',
         name: 'XRP',
         symbol: 'ripple',
         image: 'https://cryptologos.cc/logos/xrp-xrp-logo.png',
         transactions: [
             { date: '2025-01-06 18:02:17', price: 2.40458, amount: 1 },
+            { date: '2025-01-17 19:01:10', price: 3.2601, amount: 0.42691053 },
+            { date: '2025-01-17 19:01:10', price: 3.26531, amount: 0.04387996 },
+            { date: '2025-01-18 14:55:43', price: 3.15022, amount: 0.2095095 },
+            { date: '2025-01-19 21:12:28', price: 3.1779, amount: 1 },
+            { date: '2025-01-20 14:22:19', price: 3.29269, amount: 0.60740702 },
         ],
     },
     {
-        id: '21',
-        name: 'FDUSD',
-        symbol: 'first-digital-usd',
-        image: 'https://assets.coingecko.com/coins/images/31079/standard/FDUSD_icon_black.png?1731097953',
-        transactions: [
-            { date: '2024-12-31 16:40:59', price: 1.00115, amount: 0.59931063 },
-            { date: '2024-12-26 16:13:50', price: 1.08658985, amount: 1.00315 },
-            { date: '2024-12-23 20:59:38', price: 1.00365, amount: 0.21217009 },
-            { date: '2024-12-23 20:59:38', price: 1.00285, amount: 0.08374463 },
-        ],
-    },
-    {
-        id: '22',
+        id: '14',
         name: 'Bio',
         symbol: 'bio-protocol',
         image: 'https://assets.coingecko.com/coins/images/53022/standard/bio.jpg?1735011002',
@@ -248,7 +176,7 @@ const holdings: Coin[] = [
         ],
     },
     {
-        id: '23',
+        id: '15',
         name: 'GRT',
         symbol: 'the-graph',
         image: 'https://assets.coingecko.com/coins/images/13397/standard/Graph_Token.png?1696513159',
@@ -257,7 +185,7 @@ const holdings: Coin[] = [
         ],
     },
     {
-        id: '24',
+        id: '16',
         name: 'CGPT',
         symbol: 'chaingpt',
         image: 'https://assets.coingecko.com/coins/images/29306/standard/200x200.png?1696528257',
@@ -266,16 +194,18 @@ const holdings: Coin[] = [
         ],
     },
     {
-        id: '25',
+        id: '17',
         name: 'AIXBT',
         symbol: 'aixbt',
         image: 'https://assets.coingecko.com/coins/images/51784/standard/3.png?1731981138',
         transactions: [
             { date: '2025-01-12', price: 0.473812, amount: 1 },
+            { date: '2025-01-19 17:40:48', price: 0.746925, amount: 0.84572636 },
+            { date: '2025-01-19 21:13:53', price: 0.74081, amount: 1.04980747 },
         ],
     },
     {
-        id: '26',
+        id: '18',
         name: 'BTC',
         symbol: 'bitcoin',
         image: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=040',
@@ -284,7 +214,7 @@ const holdings: Coin[] = [
         ],
     },
     {
-        id: '27',
+        id: '19',
         name: 'TON',
         symbol: 'the-open-network',
         image: 'https://assets.coingecko.com/coins/images/17980/standard/photo_2024-09-10_17.09.00.jpeg?1725963446',
@@ -292,7 +222,33 @@ const holdings: Coin[] = [
             { date: '2025-01-08', price: 5.30111, amount: 0.03435474 },
             { date: '2025-01-08', price: 5.29006, amount: 0.09 },
         ],
-    }
+    },
+    {
+        id: '20',
+        name: 'SUI',
+        symbol: 'sui',
+        image: 'https://assets.coingecko.com/coins/images/26375/standard/sui-ocean-square.png?1727791290',
+        transactions: [
+            { date: '2025-01-16 16:49:31', price: 4.68501, amount: 0.21344666 },
+        ],
+    },
+    {
+        id: '21',
+        name: 'ADA',
+        symbol: 'cardano',
+        image: 'https://assets.coingecko.com/coins/images/975/standard/cardano.png?1696502090',
+        transactions: [
+            { date: '2025-01-16', price: 1.06913, amount: 0.54692523 },
+        ],
+    }, {
+        id: '22',
+        name: 'TRUMP',
+        symbol: 'official-trump',
+        image: 'https://assets.coingecko.com/coins/images/53746/standard/trump.png?1737171561',
+        transactions: [
+            { date: '2025-01-19 17:39:15', price: 72.3307, amount: 0.00873341 },
+        ],
+    },
 ];
 
 // Function to add a new coin to holdings

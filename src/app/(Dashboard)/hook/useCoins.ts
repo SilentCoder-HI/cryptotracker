@@ -7,14 +7,13 @@ export const useFetchCoins = () => {
 
     // Constant array of coin IDs used in the API call
     const coinIds = [
-        'bio-protocol', 'first-digital-usd', 'pepe', 'ethereum', 'solana', 
-        'binancecoin', 'ripple', 'terra-luna-2', 'vechain', 'bonk', 'wink', 
-        'tether', 'terra-luna', 'FLOKI', '1000sats-ordinals', 'shiba-inu', 
-        'bittorrent', 'peanut-the-squirrel', 'adventure-gold', 'dogecoin', 
-        'measurable-data-token', 'amber', 'the-open-network','bitcoin','aixbt'
-        ,'chaingpt','chaingpt'
+        'floki', 'bonk', 'pepe', 'bittorrent', 'peanut-the-squirrel',
+        'measurable-data-token', 'dogecoin', 'adventure-gold', 'vechain',
+        'binancecoin', 'ethereum', 'solana', 'ripple', 'first-digital-usd',
+        'bio-protocol', 'the-graph', 'chaingpt', 'aixbt', 'bitcoin',
+        'the-open-network', 'sui', 'cardano','official-trump'
     ];
-
+    
     useEffect(() => {
         const fetchCoins = async () => {
             try {

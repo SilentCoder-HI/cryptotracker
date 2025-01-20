@@ -65,7 +65,7 @@ const useChartData = ({ timestamp }: { timestamp: string }) => {
     // Calculate the range (in days) based on the 'timestamp' prop value
     const getRangeInDays = (range: string): number => {
         switch (range) {
-            case 'Day': return 1;       // 1 day
+            case 'Day': return 2;       // 1 day
             case 'Week': return 7;      // 7 days
             case '1M': return 30;      // 30 days
             case '6M': return 180;     // 6 months
@@ -110,7 +110,7 @@ const useChartData = ({ timestamp }: { timestamp: string }) => {
         const dailyEarnings: EarningData[] = Object.values(combinedData).map((dataPoint) => ({
             timestamp: dataPoint.date, // Use the actual date as the timestamp
             earnings: dataPoint.amount, // Total cumulative earnings
-            transactions: dataPoint.add, // Number of transactions so far
+            transactions: dataPoint.add === 0 ? dataPoint.add : dataPoint.add - 0.05, // Number of transactions so far
         }));
 
         const rangeInDays = getRangeInDays(timestamp); // Get the range in days based on the timestamp prop
