@@ -61,6 +61,7 @@ const holdings: Coin[] = [
             { date: '2025-01-08', price: 0.00000115513, amount: 317804.7 },
             { date: '2025-01-12', price: 0.00000115512, amount: 1000000 },
             { date: '2025-01-16', price: 0.00000115512, amount: 1000000 },
+            { date: '2025-01-27', price: 0.000000995122, amount: 10000000 },
         ],
     },
     {
@@ -107,11 +108,11 @@ const holdings: Coin[] = [
     },
     {
         id: '9',
-        name: 'VET',
-        symbol: 'vechain',
-        image: 'https://assets.coingecko.com/coins/images/1167/standard/VET_Token_Icon.png?1710013505',
+        name: 'DOT',
+        symbol: 'polkadot',
+        image: 'https://static.coingecko.com/s/polkadot-73b0c058cae10a2f076a82dcade5cbe38601fad05d5e6211188f09eb96fa4617.gif',
         transactions: [
-            { date: '2024-12-31 16:38:32', price: 0.0437559, amount: 4.96619234 },
+            { date: '2024-12-31 16:38:32', price: 6.351, amount: 0.03762094 },
         ],
     },
     {
@@ -124,6 +125,9 @@ const holdings: Coin[] = [
             { date: "2025-01-08", price: 696.221, amount: 0.00143632 },
             { date: "2025-01-12", price: 700.585, amount: 0.00071369 },
             { date: "2025-01-18 14:57:02", price: 706.863, amount: 0.00046685 },
+            { date: "2025-01-27 14:57:02", price: 651.286, amount: 0.00075048 },
+            { date: "2025-01-28 12:08:14", price: 685.604, amount: 0.00168488 },
+            { date: "2025-01-29 18:49:57", price: 669.163, amount: 0.0024316 },
         ],
     },
     {
@@ -182,6 +186,7 @@ const holdings: Coin[] = [
         image: 'https://assets.coingecko.com/coins/images/13397/standard/Graph_Token.png?1696513159',
         transactions: [
             { date: '2025-01-12', price: 0.205813, amount: 1.4259805 },
+            { date: '2025-01-29 18:38:41', price: 0.168146, amount: 10 },
         ],
     },
     {
@@ -239,6 +244,7 @@ const holdings: Coin[] = [
         image: 'https://assets.coingecko.com/coins/images/975/standard/cardano.png?1696502090',
         transactions: [
             { date: '2025-01-16', price: 1.06913, amount: 0.54692523 },
+            { date: '2025-01-28 12:07:45', price: 0.960967, amount: 5 },
         ],
     }, {
         id: '22',
@@ -247,6 +253,22 @@ const holdings: Coin[] = [
         image: 'https://assets.coingecko.com/coins/images/53746/standard/trump.png?1737171561',
         transactions: [
             { date: '2025-01-19 17:39:15', price: 72.3307, amount: 0.00873341 },
+        ],
+    }, {
+        id: '23',
+        name: 'POL',
+        symbol: 'matic-network',
+        image: 'https://assets.coingecko.com/coins/images/4713/standard/polygon.png?1698233745',
+        transactions: [
+            { date: '2025-01-29 18:46:41', price: 0.397761, amount: 5 },
+        ],
+    }, {
+        id: '24',
+        name: 'FET',
+        symbol: 'fetch-ai',
+        image: 'https://assets.coingecko.com/coins/images/5681/standard/ASI.png?1719827289',
+        transactions: [
+            { date: '2025-01-29 18:38:20', price: 0.9726, amount: 1 },
         ],
     },
 ];

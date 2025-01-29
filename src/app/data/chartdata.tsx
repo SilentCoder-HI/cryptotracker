@@ -112,7 +112,7 @@ const useChartData = ({ timestamp }: { timestamp: string }) => {
             earnings: dataPoint.amount, // Total cumulative earnings
             transactions: dataPoint.add === 0 ? dataPoint.add : dataPoint.add - 0.05, // Number of transactions so far
         }));
-
+        
         const rangeInDays = getRangeInDays(timestamp); // Get the range in days based on the timestamp prop
         const filteredData = filterDataByRange(dailyEarnings, rangeInDays); // Filter the data based on the time range
 

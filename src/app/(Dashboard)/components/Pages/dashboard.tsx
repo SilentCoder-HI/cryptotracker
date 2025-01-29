@@ -8,9 +8,12 @@ import EarningsChart from "../GraphComponent";
 import { useCoinPriceDetails } from "app/data/coinPriceDetails";
 import { longterm } from "app/data/longterm";
 import UseGraphData from "app/data/GraphData/exportGraphData";
+import useChartData from "app/data/chartdata";
 
 const Dashboard = () => {
     const { mergedCoins = [] } = useCoinPriceDetails();
+    const data = useChartData({ timestamp: '30' });
+
 
     // Calculate total balance
     const totalBalance = mergedCoins.reduce(
@@ -28,10 +31,11 @@ const Dashboard = () => {
         0
     );
     const totalCoins = mergedCoins.length;
+    const amount = data[0].earnings;
 
     // Calculate percentage change
     const percentageChange = latestAmount
-        ? ((totalBalance - latestAmount) / latestAmount) * 100
+        ? (totalBalance / amount) * 100
         : 0;
 
     useEffect(() => {
