@@ -62,6 +62,8 @@ const holdings: Coin[] = [
             { date: '2025-01-12', price: 0.00000115512, amount: 1000000 },
             { date: '2025-01-16', price: 0.00000115512, amount: 1000000 },
             { date: '2025-01-27', price: 0.000000995122, amount: 10000000 },
+            { date: '2025-02-02 13:25:55', price: 0.00000098, amount: 10193876.9 },
+            { date: '2025-02-02 13:26:31', price: 0.000000985373, amount: 50742.2 },
         ],
     },
     {
@@ -128,6 +130,7 @@ const holdings: Coin[] = [
             { date: "2025-01-27 14:57:02", price: 651.286, amount: 0.00075048 },
             { date: "2025-01-28 12:08:14", price: 685.604, amount: 0.00168488 },
             { date: "2025-01-29 18:49:57", price: 669.163, amount: 0.0024316 },
+            { date: "2025-02-02 13:27:09", price: 662.597, amount: 0.00030184 },
         ],
     },
     {
@@ -248,11 +251,11 @@ const holdings: Coin[] = [
         ],
     }, {
         id: '22',
-        name: 'TRUMP',
-        symbol: 'official-trump',
-        image: 'https://assets.coingecko.com/coins/images/53746/standard/trump.png?1737171561',
+        name: 'Usual',
+        symbol: 'usual',
+        image: 'https://assets.coingecko.com/coins/images/51091/standard/USUAL.jpg?1730035787',
         transactions: [
-            { date: '2025-01-19 17:39:15', price: 72.3307, amount: 0.00873341 },
+            { date: '2025-01-30 13:31:44', price: 0.39016, amount: 0.61028922 },
         ],
     }, {
         id: '23',

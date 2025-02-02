@@ -11,7 +11,7 @@ export const useFetchCoins = () => {
         'measurable-data-token', 'dogecoin', 'adventure-gold', 'polkadot',
         'binancecoin', 'ethereum', 'solana', 'ripple', 'first-digital-usd',
         'bio-protocol', 'the-graph', 'chaingpt', 'aixbt', 'bitcoin',
-        'the-open-network', 'sui', 'cardano','official-trump','matic-network','fetch-ai'
+        'the-open-network', 'sui', 'cardano','usual','matic-network','fetch-ai'
     ];
     
     useEffect(() => {
