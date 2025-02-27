@@ -8,11 +8,9 @@ import EarningsChart from "../GraphComponent";
 import { useCoinPriceDetails } from "app/data/coinPriceDetails";
 import { longterm } from "app/data/longterm";
 import UseGraphData from "app/data/GraphData/exportGraphData";
-import useChartData from "app/data/chartdata";
 
 const Dashboard = () => {
     const { mergedCoins = [] } = useCoinPriceDetails();
-    const data = useChartData({ timestamp: '30' });
 
 
     // Calculate total balance
@@ -31,13 +29,11 @@ const Dashboard = () => {
         0
     );
     const totalCoins = mergedCoins.length;
-    const amount = data[0].earnings;
 
     // Calculate percentage change
     const percentageChange = latestAmount
-        ? (totalBalance / amount) * 100
+        ? ((totalBalance - totalInvestment) / totalInvestment) * 100
         : 0;
-
     useEffect(() => {
         // Update the chart data when the component mounts
         const chartData = () => {
@@ -55,19 +51,19 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
                 <DashboardCard
                     title="Total Balance"
-                    amount={`$${totalBalance.toFixed(2)}`}
+                    amount={totalBalance}
                     percentage={percentageChange}
                     icon="faDollar"
                 />
                 <DashboardCard
                     title="Total Coins"
-                    amount={totalCoins.toString()}
+                    amount={totalCoins}
                     percentage={3} // Example static value
                     icon="faCoins"
                 />
                 <DashboardCard
                     title="Total Investment"
-                    amount={`$${totalInvestment.toFixed(2)}`}
+                    amount={totalInvestment}
                     percentage={3} // Example static value
                     icon="faArrowUp"
                 />
