@@ -12,14 +12,19 @@ const Coins: React.FC = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [sortColumn, setSortColumn] = useState<string | null>(null);
     const [sortDirection, setSortDirection] = useState<SortDirection>("normal");
+    const [selectedCoin, setSelectedCoin] = useState<string | null>(null);
+
+    const toggleTransactions = (coinId: string) => {
+        setSelectedCoin(selectedCoin === coinId ? null : coinId);
+    };
 
     const coinsPerPage = 10;
 
     const tableHeaders = [
         { label: "Coin", key: "name", sortable: true, place: "justify-start p-4 ps-6" },
         { label: "Current Price", key: "current_price", sortable: true, place: "justify-end p-4" },
-        { label: "Amount", key: "amount", sortable: true ,place:"justify-center p-4"},
-        { label: "Profit/Loss", key: "profit", sortable: true,place:"justify-center p-4" },
+        { label: "Amount", key: "amount", sortable: true, place: "justify-center p-4" },
+        { label: "Profit/Loss", key: "profit", sortable: true, place: "justify-center p-4" },
     ];
 
     const handleSort = (key: string) => {
@@ -56,7 +61,7 @@ const Coins: React.FC = () => {
     const indexOfLastCoin = currentPage * coinsPerPage;
     const indexOfFirstCoin = indexOfLastCoin - coinsPerPage;
     const currentCoins = sortedCoins.slice(indexOfFirstCoin, indexOfLastCoin);
-
+    console.log(currentCoins)
     const totalPages = Math.ceil(mergedCoins.length / coinsPerPage);
 
     // Simulate loading for 2 seconds
@@ -129,29 +134,72 @@ const Coins: React.FC = () => {
                         )}
 
                         {!loading && !error && currentCoins.length > 0 ? (
-                            currentCoins.map((coin) => (
+                            currentCoins.map((coin: { id: string, name: string, image: string, transactions: unknown, current_price: number, amount: number, profit: number }) => (
                                 <div
                                     key={coin.id}
-                                    className="grid grid-cols-4 border-b border-gray-600"
+                                    className="flex flex-col cursor-pointer border-b border-gray-600"
+                                    onClick={() => toggleTransactions(coin.id)}
                                 >
-                                    <div className="p-4 ps-6 justify-start flex items-center">
-                                        <img
-                                            src={coin.image || "https://example.com/fallback-image-url.png"}
-                                            alt={coin.name}
-                                            className="w-10 h-10 rounded-full mr-2"
-                                        />
-                                        <span className="text-white">{coin.name}</span>
+                                    <div className="grid grid-cols-4">
+                                        <div className="p-4 ps-6 justify-start flex items-center">
+                                            <img
+                                                src={coin.image || "https://example.com/fallback-image-url.png"}
+                                                alt={coin.name}
+                                                className="w-10 h-10 rounded-full mr-2"
+                                            />
+                                            <span className="text-white">{coin.name}</span>
+                                        </div>
+                                        <div className="p-4 text-right text-white">
+                                            ${coin.current_price || "N/A"}
+                                        </div>
+                                        <div className="p-4 text-white">{coin.amount || 0}</div>
+                                        <div
+                                            className={`p-4 ${coin.profit >= 0 ? "text-green-400" : "text-red-400"
+                                                }`}
+                                        >
+                                            {coin.profit?.toFixed(5) || "N/A"}
+                                        </div>
                                     </div>
-                                    <div className="p-4 text-right text-white">
-                                        ${coin.current_price || "N/A"}
-                                    </div>
-                                    <div className="p-4 text-white">{coin.amount || 0}</div>
-                                    <div
-                                        className={`p-4 ${coin.profit >= 0 ? "text-green-400" : "text-red-400"
-                                            }`}
-                                    >
-                                        {coin.profit?.toFixed(5) || "N/A"}
-                                    </div>
+                                    {/* Transactions (Visible when clicked) */}
+                                    {selectedCoin === coin.id && (
+                                        <div className="p-4 bg-gray-900 text-white transition-all">
+                                            <h3 className="font-semibold mb-2">📜 Transactions</h3>
+                                            <div className="">
+                                                {Array.isArray(coin.transactions) && coin.transactions.length > 0 ? (
+                                                    <table className="w-full text-left border border-gray-700">
+                                                        <thead>
+                                                            <tr className="bg-gray-800">
+                                                                <th className="p-2 border border-gray-700">📅 Date</th>
+                                                                <th className="p-2 border border-gray-700">💰 Price</th>
+                                                                <th className="p-2 border border-gray-700">📊 Amount</th>
+                                                                <th className="p-2 border border-gray-700">📊 PNL</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            {coin.transactions.map((txn, index) => (
+                                                                <tr key={index} className="border border-gray-700">
+                                                                    <td className="p-2">{txn.date || "N/A"}</td>
+                                                                    <td className="p-2 text-green-300">
+                                                                        {txn.price > 0 ? `$${txn.price.toFixed(10)}` : "Free"}
+                                                                    </td>
+                                                                    <td className="p-2">{txn.amount.toLocaleString()}</td>
+                                                                    <td className="p-2">
+                                                                        <span
+                                                                            className={txn.amount * (coin.current_price - txn.price) >= 0 ? "text-green-400" : "text-red-400"}
+                                                                        >
+                                                                            {(txn.amount * (coin.current_price - txn.price)).toFixed(5)}
+                                                                        </span>
+                                                                    </td>
+                                                                </tr>
+                                                            ))}
+                                                        </tbody>
+                                                    </table>
+                                                ) : (
+                                                    <p className="text-gray-400">No transactions available.</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             ))
                         ) : (

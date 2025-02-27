@@ -127,7 +127,7 @@ const Coins: React.FC = () => {
                         )}
 
                         {!loading && !error && currentCoins.length > 0 ? (
-                            currentCoins.map((coin) => (
+                            currentCoins.map((coin: { id: string, name: string, image: string, current_price: number, amount: number, profit: number }) => (
                                 <div
                                     key={coin.id}
                                     className="grid grid-cols-4 border-b border-gray-600"
